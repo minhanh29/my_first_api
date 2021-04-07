@@ -1,1 +1,1 @@
-web: gunicorn app:translator_api
+web: gunicorn translator_api:APP

@@ -20,7 +20,7 @@ class Translator(Resource):
         translator = google_translator()
         trans_sentence = translator.translate(sentence, lang_tgt='vi')
 
-        print(trans_sentence)
+        # print(trans_sentence)
 
         output = {'translated_text': trans_sentence}
 
