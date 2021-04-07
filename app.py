@@ -3,8 +3,8 @@ from flask import Flask
 from flask_restful import Api, Resource, reqparse
 
 
-APP = Flask(__name__)
-API = Api(APP)
+app = Flask(__name__)
+API = Api(app)
 
 
 class Translator(Resource):
@@ -30,4 +30,4 @@ class Translator(Resource):
 API.add_resource(Translator, '/translate')
 
 if __name__ == '__main__':
-    APP.run(debug=True)
+    app.run(debug=True)
