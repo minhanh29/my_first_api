@@ -1,5 +1,7 @@
 from google_trans_new import google_translator
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_file
+from gtts import gTTS
+
 # from flask_restful import Api, Resource, reqparse
 
 
@@ -35,7 +37,7 @@ def home():
 
 
 @app.route('/translate', methods=['POST'])
-def post():
+def translate():
     data = request.get_json(force=True)
     sentence = data['text']
 
@@ -47,6 +49,16 @@ def post():
     output = {'translated_text': trans_sentence}
 
     return jsonify(output)
+
+
+@app.route('/speak', methods=['POST'])
+def speak():
+    data = request.get_json(force=True)
+    sentence = data['text']
+    robot = gTTS(sentence, lang='vi', tld='com.vn')
+    robot.save('tmp/output.mp3')
+
+    return send_file("tmp/output.mp3", as_attachment=True)
 
 
 if __name__ == '__main__':
