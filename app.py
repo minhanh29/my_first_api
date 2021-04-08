@@ -1,6 +1,7 @@
 from google_trans_new import google_translator
 from flask import Flask, request, jsonify, render_template, send_file
 from gtts import gTTS
+from langdetect import detect, DetectorFactory
 
 # from flask_restful import Api, Resource, reqparse
 
@@ -59,6 +60,17 @@ def speak():
     robot.save('tmp/output.mp3')
 
     return send_file("tmp/output.mp3", as_attachment=True)
+
+
+@app.route('/detect', methods=['POST'])
+def detect_language():
+    data = request.get_json(force=True)
+    sentence = data['text']
+
+    DetectorFactory.seed = 0
+    output = {"lang": detect(sentence)}
+
+    return jsonify(output)
 
 
 if __name__ == '__main__':
